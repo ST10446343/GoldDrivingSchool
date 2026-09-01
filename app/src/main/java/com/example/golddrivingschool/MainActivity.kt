@@ -3,87 +3,46 @@ package com.example.golddrivingschool
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.CalendarMonth
-import androidx.compose.material.icons.filled.CarRental
-import androidx.compose.material.icons.filled.CheckCircle
-import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.DirectionsCar
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.Payment
-import androidx.compose.material.icons.filled.Schedule
-import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.Button
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.LinearProgressIndicator
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
-import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-
-private val Gold = Color(0xFFD4A017)
-private val Dark = Color(0xFF151515)
-private val Light = Color(0xFFF7F7F7)
-
-data class Booking(
-    val id: String,
-    val date: String,
-    val time: String,
-    val instructor: String,
-    val lessonType: String,
-    val status: String
-)
+import androidx.compose.foundation.layout.padding
+import com.example.golddrivingschool.screens.BookingScreen
+import com.example.golddrivingschool.screens.BookingsScreen
+import com.example.golddrivingschool.screens.HomeScreen
+import com.example.golddrivingschool.screens.LoginScreen
+import com.example.golddrivingschool.screens.ProfileScreen
+import com.example.golddrivingschool.screens.ProgressScreen
+import com.example.golddrivingschool.screens.RegisterScreen
+import com.example.golddrivingschool.ui.theme.GoldDrivingSchoolTheme
 
 class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
 
         setContent {
-            GoldDrivingSchoolApp()
+
+            GoldDrivingSchoolTheme {
+
+                GoldDrivingSchoolApp()
+            }
         }
     }
 }
@@ -99,42 +58,204 @@ fun GoldDrivingSchoolApp() {
         mutableStateOf("Student")
     }
 
-    MaterialTheme {
+    when (currentScreen) {
 
-        Surface(
-            modifier = Modifier.fillMaxSize(),
-            color = Light
+        "login" -> {
+
+            LoginScreen(
+
+                onLogin = { name ->
+
+                    studentName = name
+                    currentScreen = "home"
+                },
+
+                onRegister = {
+
+                    currentScreen = "register"
+                }
+            )
+        }
+
+        "register" -> {
+
+            RegisterScreen(
+
+                onRegister = { name ->
+
+                    studentName = name
+                    currentScreen = "home"
+                },
+
+                onBack = {
+
+                    currentScreen = "login"
+                }
+            )
+        }
+
+        "home" -> {
+
+            MainNavigation(
+                studentName = studentName,
+                onLogout = {
+
+                    currentScreen = "login"
+                }
+            )
+        }
+    }
+}
+
+@Composable
+fun MainNavigation(
+    studentName: String,
+    onLogout: () -> Unit
+) {
+
+    var selectedTab by remember {
+        mutableStateOf(0)
+    }
+
+    var showBookingScreen by remember {
+        mutableStateOf(false)
+    }
+
+    if (showBookingScreen) {
+
+        BookingScreen(
+            onBack = {
+                showBookingScreen = false
+            }
+        )
+
+        return
+    }
+
+    Scaffold(
+
+        bottomBar = {
+
+            NavigationBar {
+
+                NavigationBarItem(
+
+                    selected = selectedTab == 0,
+
+                    onClick = {
+                        selectedTab = 0
+                    },
+
+                    icon = {
+
+                        Icon(
+                            imageVector = Icons.Default.Home,
+                            contentDescription = "Home"
+                        )
+                    },
+
+                    label = {
+                        Text("Home")
+                    }
+                )
+
+                NavigationBarItem(
+
+                    selected = selectedTab == 1,
+
+                    onClick = {
+                        selectedTab = 1
+                    },
+
+                    icon = {
+
+                        Icon(
+                            imageVector = Icons.Default.CalendarMonth,
+                            contentDescription = "Bookings"
+                        )
+                    },
+
+                    label = {
+                        Text("Bookings")
+                    }
+                )
+
+                NavigationBarItem(
+
+                    selected = selectedTab == 2,
+
+                    onClick = {
+                        selectedTab = 2
+                    },
+
+                    icon = {
+
+                        Icon(
+                            imageVector = Icons.Default.DirectionsCar,
+                            contentDescription = "Progress"
+                        )
+                    },
+
+                    label = {
+                        Text("Progress")
+                    }
+                )
+
+                NavigationBarItem(
+
+                    selected = selectedTab == 3,
+
+                    onClick = {
+                        selectedTab = 3
+                    },
+
+                    icon = {
+
+                        Icon(
+                            imageVector = Icons.Default.Person,
+                            contentDescription = "Profile"
+                        )
+                    },
+
+                    label = {
+                        Text("Profiles")
+                    }
+                )
+            }
+        }
+    ) { paddingValues ->
+
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues)
         ) {
 
-            when (currentScreen) {
+            when (selectedTab) {
 
-                "login" -> LoginScreen(
-                    onLogin = {
-                        studentName = it
-                        currentScreen = "home"
-                    },
-                    onRegister = {
-                        currentScreen = "register"
-                    }
-                )
+                0 -> {
+                    HomeScreen(
+                        studentName = studentName,
+                        onBookLesson = {
+                            showBookingScreen = true
+                        }
+                    )
+                }
 
-                "register" -> RegisterScreen(
-                    onRegister = {
-                        studentName = it
-                        currentScreen = "home"
-                    },
-                    onBack = {
-                        currentScreen = "login"
-                    }
-                )
+                1 -> {
+                    BookingsScreen()
+                }
 
-                "home" -> MainScreen(
-                    studentName = studentName,
-                    onLogout = {
-                        currentScreen = "login"
-                    }
-                )
+                2 -> {
+                    ProgressScreen()
+                }
 
+                3 -> {
+                    ProfileScreen(
+                        studentName = studentName,
+                        onLogout = onLogout
+                    )
+                }
             }
         }
     }
