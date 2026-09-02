@@ -15,8 +15,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.text.font.FontWeight
 import com.example.golddrivingschool.data.Booking
-import com.example.golddrivingschool.ui.theme.SuccessGreen
-
 
 @Composable
 fun BookingCard(
@@ -49,7 +47,6 @@ fun BookingCard(
                     color = if (booking.status == "Confirmed") {
                         SuccessGreen
                     } else {
-                        com.example.golddrivingschool.ui.theme.Gold
                     }
                 )
             }
