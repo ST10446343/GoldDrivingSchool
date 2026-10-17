@@ -19,12 +19,21 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.golddrivingschool.components.DashboardCard
-
+import androidx.compose.ui.tooling.preview.Preview
+import com.example.golddrivingschool.data.BookingRepository
 @Composable
 fun HomeScreen(
     studentName: String,
     onBookLesson: () -> Unit
 ) {
+    val nextBooking = BookingRepository.bookings.firstOrNull()
+
+    val nextLessonValue = nextBooking?.date ?: "No Bookings"
+    val nextLessonDesc = if (nextBooking != null) {
+        "${nextBooking.time}  Instructor ${nextBooking.instructor}"
+    } else {
+        "Book a lesson to get started"
+    }
 
     LazyColumn(
         modifier = Modifier
@@ -77,8 +86,8 @@ fun HomeScreen(
 
             DashboardCard(
                 title = "Next Lesson",
-                value = "15 June",
-                description = "14:00 • Instructor Peter"
+                value = nextLessonValue,
+                description = nextLessonDesc
             )
 
             DashboardCard(
@@ -123,4 +132,12 @@ fun HomeScreen(
             )
         }
     }
+}
+@Preview(showBackground = true)
+@Composable
+fun HomeScreenPreview() {
+    HomeScreen(
+        studentName = "Peter",
+        onBookLesson = {}
+    )
 }

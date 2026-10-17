@@ -25,6 +25,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.tooling.preview.Preview
+import com.example.golddrivingschool.ui.theme.GoldDrivingSchoolTheme
+import com.example.golddrivingschool.data.UserRepository
 
 @Composable
 fun RegisterScreen(
@@ -161,20 +164,29 @@ fun RegisterScreen(
 
         Button(
             onClick = {
-
-                onRegister(
-                    if (firstName.isBlank()) {
-                        "Student"
+                if (email.isNotBlank() && password.isNotBlank()) {
+                    val success = UserRepository.registerUser(email, password)
+                    if (success) {
+                        val name = if (firstName.isBlank()) "Student" else firstName
+                        onRegister(name)
                     } else {
-                        firstName
-                    }
-                )
-            },
 
+                    }
+                }
+            },
             modifier = Modifier.fillMaxWidth()
         ) {
-
             Text("Create Account")
         }
+    }
+}
+@Preview(showBackground = true)
+@Composable
+fun RegisterScreenPreview() {
+    GoldDrivingSchoolTheme {
+        RegisterScreen(
+            onRegister = {},
+            onBack = {}
+        )
     }
 }

@@ -18,6 +18,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.golddrivingschool.components.SkillProgress
 import com.example.golddrivingschool.ui.theme.Gold
+import androidx.compose.ui.tooling.preview.Preview
+import com.example.golddrivingschool.ui.theme.GoldDrivingSchoolTheme
 
 @Composable
 fun ProgressScreen() {
@@ -101,5 +103,11 @@ fun ProgressScreen() {
                 progress = 0.70f
             )
         }
+    }
+}@Preview(showBackground = true)
+@Composable
+fun ProgressScreenPreview() {
+    GoldDrivingSchoolTheme {
+        ProgressScreen()
     }
 }
