@@ -24,6 +24,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.tooling.preview.Preview
+import com.example.golddrivingschool.ui.theme.GoldDrivingSchoolTheme
 
 @Composable
 fun BookingScreen(
@@ -76,7 +78,11 @@ fun BookingScreen(
 
                 TextButton(
                     onClick = {
-
+                        com.example.golddrivingschool.data.BookingRepository.addBooking(
+                            instructor = instructor,
+                            lessonType = lessonType,
+                            date = date,
+                            time = time)
                         showConfirmation = false
                         onBack()
                     }
@@ -217,5 +223,12 @@ fun BookingScreen(
 
             Text("Confirm the Booking")
         }
+    }
+}
+@Preview(showBackground = true)
+@Composable
+fun BookingScreenPreview() {
+    GoldDrivingSchoolTheme {
+        BookingScreen(onBack = {})
     }
 }

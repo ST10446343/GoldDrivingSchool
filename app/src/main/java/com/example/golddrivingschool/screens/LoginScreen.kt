@@ -21,7 +21,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-
+import androidx.compose.ui.tooling.preview.Preview
+import com.example.golddrivingschool.ui.theme.GoldDrivingSchoolTheme
 
 @Composable
 fun LoginScreen(
@@ -36,6 +37,8 @@ fun LoginScreen(
     var password by remember {
         mutableStateOf("")
     }
+    var errorMessage by remember {
+        mutableStateOf("") }
 
     Column(
         modifier = Modifier
@@ -109,15 +112,21 @@ fun LoginScreen(
         Button(
             onClick = {
 
-                val name =
-                    if (email.contains("@")) {
+                val isValid = com.example.golddrivingschool.data.UserRepository.validateLogin(email, password)
+
+                if (isValid) {
+                    val name = if (email.contains("@")) {
                         email.substringBefore("@")
                     } else {
                         "Student"
                     }
 
-                onLogin(name)
-            },
+                    onLogin(name)
+                } else {
+                    errorMessage = "Account does not exist or youve have entered the incorrect email or password"
+                }
+
+                             },
 
             modifier = Modifier.fillMaxWidth()
         ) {
@@ -136,5 +145,15 @@ fun LoginScreen(
 
             Text("Dont have an account? Register")
         }
+    }
+}
+@Preview(showBackground = true)
+@Composable
+fun LoginScreenPreview() {
+    GoldDrivingSchoolTheme {
+        LoginScreen(
+            onLogin = {},
+            onRegister = {}
+        )
     }
 }

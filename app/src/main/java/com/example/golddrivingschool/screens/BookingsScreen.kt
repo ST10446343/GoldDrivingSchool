@@ -20,7 +20,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.golddrivingschool.components.BookingCard
 import com.example.golddrivingschool.data.Booking
-
+import androidx.compose.ui.tooling.preview.Preview
+import com.example.golddrivingschool.ui.theme.GoldDrivingSchoolTheme
+import com.example.golddrivingschool.data.BookingRepository
 @Composable
 fun BookingsScreen() {
 
@@ -28,26 +30,7 @@ fun BookingsScreen() {
         mutableStateOf<Booking?>(null)
     }
 
-    val bookings = listOf(
-
-        Booking(
-            id = "B001",
-            date = "15 June 2026",
-            time = "14:00",
-            instructor = "Leon Schuster",
-            lessonType = "Driving Lesson",
-            status = "Confirmed"
-        ),
-
-        Booking(
-            id = "B002",
-            date = "20 June 2026",
-            time = "10:00",
-            instructor = "John Doe",
-            lessonType = "Test Preparation",
-            status = "Pending"
-        )
-    )
+    val bookings = BookingRepository.bookings
 
     if (selectedBooking != null) {
 
@@ -72,6 +55,7 @@ fun BookingsScreen() {
 
                 TextButton(
                     onClick = {
+                        BookingRepository.removeBooking(selectedBooking!!)
                         selectedBooking = null
                     }
                 ) {
@@ -120,5 +104,12 @@ fun BookingsScreen() {
                 }
             )
         }
+    }
+}
+@Preview(showBackground = true)
+@Composable
+fun BookingsScreenPreview() {
+    GoldDrivingSchoolTheme {
+        BookingsScreen()
     }
 }

@@ -24,6 +24,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.golddrivingschool.components.ProfileItem
+import androidx.compose.ui.tooling.preview.Preview
+import com.example.golddrivingschool.ui.theme.GoldDrivingSchoolTheme
 
 @Composable
 fun ProfileScreen(
@@ -137,5 +139,15 @@ fun ProfileScreen(
 
             Text("Logout")
         }
+    }
+}
+@Preview(showBackground = true)
+@Composable
+fun ProfileScreenPreview() {
+    GoldDrivingSchoolTheme {
+        ProfileScreen(
+            studentName = "Peter Parker",
+            onLogout = {}
+        )
     }
 }
