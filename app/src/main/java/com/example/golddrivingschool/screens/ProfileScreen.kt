@@ -30,7 +30,8 @@ import com.example.golddrivingschool.ui.theme.GoldDrivingSchoolTheme
 @Composable
 fun ProfileScreen(
     studentName: String,
-    onLogout: () -> Unit
+    onLogout: () -> Unit,
+    onNavigateToSettings: () -> Unit = {}
 ) {
 
     var showLogoutDialog by remember {
@@ -117,7 +118,8 @@ fun ProfileScreen(
 
         ProfileItem(
             icon = Icons.Default.Settings,
-            title = "Settings"
+            title = "Settings",
+            onClick = onNavigateToSettings
         )
 
         ProfileItem(

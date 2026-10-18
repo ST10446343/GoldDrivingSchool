@@ -167,8 +167,8 @@ fun RegisterScreen(
                 if (email.isNotBlank() && password.isNotBlank()) {
                     val success = UserRepository.registerUser(email, password)
                     if (success) {
-                        val name = if (firstName.isBlank()) "Student" else firstName
-                        onRegister(name)
+
+                        onRegister(email)
                     } else {
 
                     }

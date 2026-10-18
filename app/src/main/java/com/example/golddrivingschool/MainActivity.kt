@@ -30,7 +30,7 @@ import com.example.golddrivingschool.screens.ProfileScreen
 import com.example.golddrivingschool.screens.ProgressScreen
 import com.example.golddrivingschool.screens.RegisterScreen
 import com.example.golddrivingschool.ui.theme.GoldDrivingSchoolTheme
-
+import com.example.golddrivingschool.screens.SettingsScreen
 class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -81,10 +81,9 @@ fun GoldDrivingSchoolApp() {
 
             RegisterScreen(
 
-                onRegister = { name ->
+                onRegister = { _ ->
 
-                    studentName = name
-                    currentScreen = "home"
+                    currentScreen = "login"
                 },
 
                 onBack = {
@@ -120,6 +119,9 @@ fun MainNavigation(
     var showBookingScreen by remember {
         mutableStateOf(false)
     }
+    var showSettingsScreen by remember {
+        mutableStateOf(false)
+    }
 
     if (showBookingScreen) {
 
@@ -129,6 +131,14 @@ fun MainNavigation(
             }
         )
 
+        return
+    }
+    if (showSettingsScreen) {
+        SettingsScreen(
+            onBack = {
+                showSettingsScreen = false
+            }
+        )
         return
     }
 
@@ -253,7 +263,9 @@ fun MainNavigation(
                 3 -> {
                     ProfileScreen(
                         studentName = studentName,
-                        onLogout = onLogout
+                        onLogout = onLogout,
+                        onNavigateToSettings = {
+                            showSettingsScreen = true}
                     )
                 }
             }
