@@ -1,6 +1,6 @@
-**Gold Driiving School Management System**
+**Gold Driving School Management System**
 
-Gold Driving School Management System is a mobile application system that we have developed to improve the management of driving lessons that users make The users cam register, log in, book driving lessins, view their bookings, monitor their driving progress and also look and manage their profile
+Gold Driving School Management System is a mobile application system that we have developed to improve the management of driving lessons that users make The users can register, log in, book driving lessins, view their bookings, monitor their driving progress and also look and manage their profile
 
 **Project Team**
 Gofaone Thobang 
