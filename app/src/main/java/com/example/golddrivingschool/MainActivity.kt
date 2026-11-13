@@ -31,6 +31,8 @@ import com.example.golddrivingschool.screens.ProgressScreen
 import com.example.golddrivingschool.screens.RegisterScreen
 import com.example.golddrivingschool.ui.theme.GoldDrivingSchoolTheme
 import com.example.golddrivingschool.screens.SettingsScreen
+import com.example.golddrivingschool.screens.PersonalInformationScreen
+import com.example.golddrivingschool.screens.PaymentsScreen
 class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -100,7 +102,8 @@ fun GoldDrivingSchoolApp() {
                 onLogout = {
 
                     currentScreen = "login"
-                }
+                },
+                onNameUpdated = {newName -> studentName = newName}
             )
         }
     }
@@ -109,7 +112,8 @@ fun GoldDrivingSchoolApp() {
 @Composable
 fun MainNavigation(
     studentName: String,
-    onLogout: () -> Unit
+    onLogout: () -> Unit,
+    onNameUpdated: (String) -> Unit
 ) {
 
     var selectedTab by remember {
@@ -120,6 +124,12 @@ fun MainNavigation(
         mutableStateOf(false)
     }
     var showSettingsScreen by remember {
+        mutableStateOf(false)
+    }
+    var showPersonalInfoScreen by remember {
+        mutableStateOf(false)
+    }
+    var showPaymentsScreen by remember {
         mutableStateOf(false)
     }
 
@@ -138,6 +148,21 @@ fun MainNavigation(
             onBack = {
                 showSettingsScreen = false
             }
+        )
+        return
+    }
+    if (showPersonalInfoScreen) {
+        PersonalInformationScreen(
+            onBack = { updatedName ->
+                onNameUpdated(updatedName)
+                showPersonalInfoScreen = false
+            }
+        )
+        return
+    }
+    if (showPaymentsScreen) {
+        PaymentsScreen(
+            onBack = { showPaymentsScreen = false }
         )
         return
     }
@@ -265,7 +290,11 @@ fun MainNavigation(
                         studentName = studentName,
                         onLogout = onLogout,
                         onNavigateToSettings = {
-                            showSettingsScreen = true}
+                            showSettingsScreen = true},
+                        onNavigateToPersonalInfo = {
+                            showPersonalInfoScreen = true },
+                        onNavigateToPayments = {
+                            showPaymentsScreen = true}
                     )
                 }
             }

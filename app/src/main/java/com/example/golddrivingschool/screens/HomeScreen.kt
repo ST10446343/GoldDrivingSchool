@@ -31,10 +31,11 @@ fun HomeScreen(
 
     val nextLessonValue = nextBooking?.date ?: "No Bookings"
     val nextLessonDesc = if (nextBooking != null) {
-        "${nextBooking.time}  Instructor ${nextBooking.instructor} (\${nextBooking.transmission})"
+        "${nextBooking.time}  | ${nextBooking.instructor} (\${nextBooking.transmission})"
     } else {
         "Book a lesson to get started"
     }
+    val currentBalance = BookingRepository.outstandingBalance
 
     LazyColumn(
         modifier = Modifier
@@ -99,8 +100,8 @@ fun HomeScreen(
 
             DashboardCard(
                 title = "Outstanding Balance",
-                value = "R850",
-                description = "Current balance"
+                value = "R$currentBalance",
+                description = if (currentBalance == 0) "All paid up" else "Current balance"
             )
 
             Spacer(

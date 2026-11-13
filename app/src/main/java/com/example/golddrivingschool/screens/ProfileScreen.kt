@@ -31,7 +31,9 @@ import com.example.golddrivingschool.ui.theme.GoldDrivingSchoolTheme
 fun ProfileScreen(
     studentName: String,
     onLogout: () -> Unit,
-    onNavigateToSettings: () -> Unit = {}
+    onNavigateToSettings: () -> Unit = {},
+    onNavigateToPersonalInfo: () -> Unit ={},
+    onNavigateToPayments: () -> Unit = {}
 ) {
 
     var showLogoutDialog by remember {
@@ -113,7 +115,8 @@ fun ProfileScreen(
 
         ProfileItem(
             icon = Icons.Default.Person,
-            title = "Personal Information"
+            title = "Personal Information",
+            onClick = onNavigateToPersonalInfo
         )
 
         ProfileItem(
@@ -124,7 +127,8 @@ fun ProfileScreen(
 
         ProfileItem(
             icon = Icons.Default.Payment,
-            title = "Payments"
+            title = "Payments",
+            onClick = onNavigateToPayments
         )
 
         Spacer(

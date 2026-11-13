@@ -1,6 +1,10 @@
 package com.example.golddrivingschool.data
 
 import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
+
 
 object BookingRepository {
 
@@ -27,6 +31,9 @@ object BookingRepository {
 
     val bookings: List<Booking> get() = _bookings
 
+    var outstandingBalance by mutableIntStateOf(850)
+        private set
+
     fun addBooking(instructor: String, lessonType: String, date: String, time: String, transmission: String) {
         val newId = "B00${_bookings.size + 1}"
         val newBooking = Booking(
@@ -39,9 +46,15 @@ object BookingRepository {
             status = "Confirmed"
         )
         _bookings.add(newBooking)
+        outstandingBalance += 350
     }
 
     fun removeBooking(booking: Booking) {
-        _bookings.remove(booking)
+        if(_bookings.remove(booking)) {
+            outstandingBalance = (outstandingBalance - 350).coerceAtLeast(0)
+        }
+    }
+    fun clearBalance(){
+        outstandingBalance = 0
     }
 }
