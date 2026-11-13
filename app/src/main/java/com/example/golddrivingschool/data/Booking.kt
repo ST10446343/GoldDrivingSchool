@@ -6,5 +6,6 @@ data class Booking(
     val time: String,
     val instructor: String,
     val lessonType: String,
+    val transmission: String,
     val status: String
 )

@@ -21,16 +21,17 @@ import androidx.compose.ui.unit.sp
 import com.example.golddrivingschool.components.DashboardCard
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.golddrivingschool.data.BookingRepository
+
 @Composable
 fun HomeScreen(
     studentName: String,
     onBookLesson: () -> Unit
 ) {
-    val nextBooking = BookingRepository.bookings.firstOrNull()
+    val nextBooking = BookingRepository.bookings.lastOrNull()
 
     val nextLessonValue = nextBooking?.date ?: "No Bookings"
     val nextLessonDesc = if (nextBooking != null) {
-        "${nextBooking.time}  Instructor ${nextBooking.instructor}"
+        "${nextBooking.time}  Instructor ${nextBooking.instructor} (\${nextBooking.transmission})"
     } else {
         "Book a lesson to get started"
     }

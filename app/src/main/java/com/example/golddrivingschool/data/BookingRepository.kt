@@ -11,6 +11,7 @@ object BookingRepository {
             time = "14:00",
             instructor = "Leon Schuster",
             lessonType = "Driving Lesson",
+            transmission = "Manual",
             status = "Confirmed"
         ),
         Booking(
@@ -19,13 +20,14 @@ object BookingRepository {
             time = "10:00",
             instructor = "John Doe",
             lessonType = "Test Preparation",
+            transmission = "Automatic",
             status = "Pending"
         )
     )
 
     val bookings: List<Booking> get() = _bookings
 
-    fun addBooking(instructor: String, lessonType: String, date: String, time: String) {
+    fun addBooking(instructor: String, lessonType: String, date: String, time: String, transmission: String) {
         val newId = "B00${_bookings.size + 1}"
         val newBooking = Booking(
             id = newId,
@@ -33,6 +35,7 @@ object BookingRepository {
             time = time,
             instructor = instructor,
             lessonType = lessonType,
+            transmission = transmission,
             status = "Confirmed"
         )
         _bookings.add(newBooking)

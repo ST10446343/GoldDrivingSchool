@@ -67,7 +67,11 @@ fun BookingCard(
             )
 
             Text(
-                text = "Instrucctor: ${booking.instructor}"
+                text = "Transmission: ${booking.transmission}"
+            )
+
+            Text(
+                text = "Instructor: ${booking.instructor}"
             )
 
             Spacer(
